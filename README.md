@@ -3,7 +3,7 @@
 # k8s run
 ```
 kubectl create configmap ntp-config --from-file config/
-**or**
+or
 kubectl create -f k8s/ntp-config.yaml
 
 kubectl create -f k8s/ntp-svc.yaml
