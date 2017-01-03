@@ -1,0 +1,36 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    chrony.conf: |2
+
+      server 0.coreos.pool.ntp.org iburst
+      server 1.coreos.pool.ntp.org iburst
+      server 2.coreos.pool.ntp.org iburst
+
+      allow 192.168.32.0/23
+      allow 10.0.0.0/8
+
+      # In first three updates step the system clock instead of slew
+      # if the adjustment is larger than 10 seconds.
+      makestep 10 3
+
+      # Serve time even if not synchronized to any NTP server.
+      local stratum 10
+
+      # Default keyfile path.
+      keyfile /etc/chrony/chrony.keys
+
+      # Specify the key used as password for chronyc.
+      commandkey 1
+
+      # Generate command key if missing.
+      generatecommandkey
+    chrony.keys: |
+      1 admin
+  kind: ConfigMap
+  metadata:
+    name: ntp-config
+    namespace: default
+kind: List
+metadata: {}
